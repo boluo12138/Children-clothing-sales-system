@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wzu.sys.mapper.GoodsMapper">
+    <sql id="Base_Column_List">
+        id,name,description,img,price,unit,count,type_id,business_id
+    </sql>
+    <select id="selectById" resultType="com.wzu.sys.entity.Goods">
+        select goods.*, x_user.name as businessName,x_type.name as typeName,
+               x_activity.name as activityName,x_activity.status as activityStatus,
+               x_activity.discount as activityDiscount,x_activity.price as activityPrice
+        from x_goods goods
+        left join x_user on goods.business_id = x_user.id
+        left join x_type on goods.type_id = x_type.id
+        left join x_activity on goods.activity_id = x_activity.id
+        where goods.id = #{id}
+    </select>
+</mapper>
